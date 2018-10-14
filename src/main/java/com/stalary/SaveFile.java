@@ -22,7 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Hello
+ * SaveFile
  *
  * @author lirongqian
  * @since 2018/10/14
@@ -34,7 +34,7 @@ public class SaveFile extends AbstractMojo {
     @Parameter(property = "path")
     private String path;
 
-    public static final Map<String, String> PATH_MAP = new HashMap<>();
+    private static final Map<String, String> PATH_MAP = new HashMap<>();
 
     @Override
     public void execute() {
@@ -113,6 +113,9 @@ public class SaveFile extends AbstractMojo {
         return sb;
     }
 
+    /**
+     * 生成pathMapper映射
+     */
     private void pathMapper(List<File> fileList) {
         // !!! 插件用lambda报错
         for (File file : fileList) {
@@ -121,6 +124,9 @@ public class SaveFile extends AbstractMojo {
         }
     }
 
+    /**
+     * 将文件路径生成 文件名:包路径 的映射
+     */
     private NamePack path2Pack(String filePath) {
         String temp = filePath.replaceAll("/", ".");
         String packPath = temp.substring(temp.indexOf(path));
