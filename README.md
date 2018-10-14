@@ -2,6 +2,8 @@
 # easydoc-maven-plugin
 easy-doc的maven插件，用于存储过滤后的源文件，文件会在resouce中生成
 
+> 插件的思路来源于张大神(张大神还在考研奋战中),不然我就直接用python脚本刚了
+
 # 引入依赖方法
 使用maven引入
 ```xml
