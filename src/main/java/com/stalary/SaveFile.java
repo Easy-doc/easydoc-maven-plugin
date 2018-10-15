@@ -85,9 +85,12 @@ public class SaveFile extends AbstractMojo {
                     e.printStackTrace();
                 }
             }
-            try (FileWriter writer = new FileWriter(System.getProperty("user.dir").replaceAll("\\.", "/") + "/src/main/resources/easydoc.txt", false)) {
+            String fileName = System.getProperty("user.dir").replaceAll("\\.", "/") + "/src/main/resources/easydoc.txt";
+            // 直接使用FileWriter默认使用（ISO-8859-1 or US-ASCII）西方编码，中文会乱码
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), Charset.forName("UTF-8")))) {
                 // 退出时存储消息
                 writer.write(sb.toString());
+                writer.flush();
             } catch (Exception e) {
                 e.printStackTrace();
             }
