@@ -12,7 +12,7 @@ easy-doc的maven插件，用于存储过滤后的源文件，文件会在resouce
     <repository>
 	<id>oss</id>
 	<name>oss</name>
-	<url>https://oss.sonatype.org/content/groups/public</url>
+	<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
     </repository>
     <repository>
         <id>aliyun-repository</id>
