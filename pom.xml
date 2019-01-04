@@ -4,7 +4,7 @@
     <groupId>com.stalary</groupId>
     <artifactId>easydoc-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>easydoc-maven-plugin</name>
     <description>easydoc maven plugin</description>
     <licenses>

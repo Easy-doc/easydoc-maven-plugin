@@ -10,9 +10,9 @@ easy-doc的maven插件，用于存储过滤后的源文件，文件会在resouce
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <repositories>
     <repository>
-	<id>oss</id>
-	<name>oss</name>
-	<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+	    <id>oss</id>
+	    <name>oss</name>
+	    <url>https://oss.sonatype.org/content/repositories/releases/</url>
     </repository>
     <repository>
         <id>aliyun-repository</id>
