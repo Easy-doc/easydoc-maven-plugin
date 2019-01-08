@@ -6,20 +6,6 @@ easy-doc的maven插件，用于存储过滤后的源文件，文件会在resouce
 # 引入依赖方法
 使用maven引入
 ```xml
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-<repositories>
-    <repository>
-	    <id>oss</id>
-	    <name>oss</name>
-	    <url>https://oss.sonatype.org/content/repositories/releases/</url>
-    </repository>
-    <repository>
-        <id>aliyun-repository</id>
-        <name>aliyun repository</name>
-        <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-    </repository>
-</repositories>
 <build>
         <plugins>
             <plugin>
