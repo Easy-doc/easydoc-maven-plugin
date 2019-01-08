@@ -4,7 +4,7 @@
     <groupId>com.stalary</groupId>
     <artifactId>easydoc-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
     <name>easydoc-maven-plugin</name>
     <description>easydoc maven plugin</description>
     <licenses>
@@ -30,7 +30,7 @@
     <distributionManagement>
         <repository>
             <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
 
         <snapshotRepository>
@@ -38,6 +38,11 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
@@ -55,16 +60,4 @@
             <version>1.2.49</version>
         </dependency>
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>
