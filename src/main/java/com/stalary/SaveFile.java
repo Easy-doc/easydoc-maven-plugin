@@ -6,6 +6,7 @@
 package com.stalary;
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -13,10 +14,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.*;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 
@@ -35,6 +33,18 @@ public class SaveFile extends AbstractMojo {
     @Parameter(property = "path")
     private String path;
 
+    /** 指定路径下包含的文件 **/
+    @Parameter(property = "includeFile")
+    private String includeFile;
+
+    /** 指定路径下需要排除的文件 **/
+    @Parameter(property = "excludeFile")
+    private String excludeFile;
+
+    private List<String> includeList = new ArrayList<>();
+
+    private List<String> excludeList = new ArrayList<>();
+
     private static final Map<String, String> PATH_MAP = new HashMap<>();
 
     @Override
@@ -43,6 +53,14 @@ public class SaveFile extends AbstractMojo {
             List<File> fileList = new ArrayList<>();
             String fileName = System.getProperty("user.dir") + "/src/main/java/" + path.replaceAll("\\.", "/");
             File file = new File(fileName);
+            if (StringUtils.isNotEmpty(includeFile)) {
+                String[] includeSplit = includeFile.split(",");
+                includeList.addAll(Arrays.asList(includeSplit));
+            }
+            if (StringUtils.isNotEmpty(excludeFile)) {
+                String[] includeSplit = excludeFile.split(",");
+                excludeList.addAll(Arrays.asList(includeSplit));
+            }
             getFile(file, fileList);
             file2String(fileList);
         } catch (Exception e) {
@@ -53,7 +71,18 @@ public class SaveFile extends AbstractMojo {
     private void getFile(File file, List<File> fileList) {
         if (file.exists()) {
             if (file.isFile()) {
-                fileList.add(file);
+                // 获取去掉后缀的文件名
+                String name = file.getName().split("\\.")[0];
+                // 排除掉不需要的文件
+                if (!excludeList.contains(name)) {
+                    if (!includeList.isEmpty()) {
+                        if (includeList.contains(name)) {
+                            fileList.add(file);
+                        }
+                    } else {
+                        fileList.add(file);
+                    }
+                }
             } else if (file.isDirectory()) {
                 File[] files = file.listFiles();
                 if (files != null) {
@@ -88,6 +117,11 @@ public class SaveFile extends AbstractMojo {
             }
         }
         String fileName = System.getProperty("user.dir").replaceAll("\\.", "/") + "/src/main/resources/easydoc.txt";
+        File file = new File(fileName);
+        // 文件存在时，先删除
+        if (file.exists()) {
+            file.delete();
+        }
         // 直接使用FileWriter默认使用（ISO-8859-1 or US-ASCII）西方编码，中文会乱码
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), Charset.forName("UTF-8")))) {
             // 退出时存储消息
@@ -102,10 +136,9 @@ public class SaveFile extends AbstractMojo {
         String regex = "(?<!:)\\/\\/.*|\\/\\*(\\s|.)*?\\*\\/";
         Matcher matcher = RegularExpressionUtils.createMatcherWithTimeout(str.toString(), regex, 200);
         StringBuilder sb = new StringBuilder();
-        while (matcher.find()) {
-            String temp = "";
-            try {
-                temp = matcher
+        try {
+            while (matcher.find()) {
+                String temp = matcher
                         .group()
                         .replaceAll("\\/\\/[^\n]*", "")
                         .replaceAll("\\/\\*\\*", "")
@@ -114,11 +147,9 @@ public class SaveFile extends AbstractMojo {
                         .replaceAll(" +", " ");
                 // 每次匹配以~~分割
                 sb.append(temp).append("~~");
-            } catch (Exception e) {
-                // skip
-                log.warning("matcher error, please check it. skip..." + "\n" + name + " : " + temp);
-                log.warning("error: " + e);
             }
+        } catch (Exception e) {
+            log.warning("easydoc matcher error, name=" + name + " info=" + e.getMessage());
         }
         return sb;
     }
