@@ -2,6 +2,10 @@
 # easydoc-maven-plugin
 easy-doc的maven插件，用于存储过滤后的源文件，文件会在resouce中生成
 
+# 版本说明
+## 1.0.0
+- 第一个线上可用版本
+- 可以选择解析指定文件以及跳过指定文件
 
 # 引入依赖方法
 使用maven引入
@@ -14,6 +18,8 @@ easy-doc的maven插件，用于存储过滤后的源文件，文件会在resouce
                 <!-- -Dpath可以替代 -->
                 <!--<configuration>
                     <path>com.stalary.easydoc</path>
+                    <excludePath>A,B</excludePath>
+                    <includePath>C,D,F</includePath>
                 </configuration>-->
                 <executions>
                     <execution>
