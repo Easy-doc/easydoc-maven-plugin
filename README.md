@@ -15,6 +15,7 @@ easy-doc的maven插件，用于存储过滤后的源文件，文件会在resouce
             <plugin>
                 <groupId>com.stalary</groupId>
                 <artifactId>easydoc-maven-plugin</artifactId>
+                <version>1.0.0</version>
                 <!-- -Dpath可以替代 -->
                 <!--<configuration>
                     <path>com.stalary.easydoc</path>
