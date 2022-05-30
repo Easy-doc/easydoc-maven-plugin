@@ -5,16 +5,26 @@
  */
 package com.stalary;
 
-import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 
@@ -97,7 +107,7 @@ public class SaveFile extends AbstractMojo {
     private void file2String(List<File> fileList) {
         StringBuilder sb = new StringBuilder();
         pathMapper(fileList);
-        sb.append(JSONObject.toJSONString(PATH_MAP)).append(",,,");
+        sb.append(JsonUtil.objectToJson(PATH_MAP)).append(",,,");
         for (File file : fileList) {
             String fileName = file.getName();
             String name = fileName.substring(0, fileName.indexOf("."));
@@ -133,14 +143,13 @@ public class SaveFile extends AbstractMojo {
     }
 
     private StringBuilder matching(StringBuilder str, String name) {
-        String regex = "(?<!:)\\/\\/.*|\\/\\*(\\s|.)*?\\*\\/";
+        String regex = "\\/\\*(\\s|.)*?\\*\\/";
         Matcher matcher = RegularExpressionUtils.createMatcherWithTimeout(str.toString(), regex, 200);
         StringBuilder sb = new StringBuilder();
         try {
             while (matcher.find()) {
                 String temp = matcher
                         .group()
-                        .replaceAll("\\/\\/[^\n]*", "")
                         .replaceAll("\\/\\*\\*", "")
                         .replaceAll("\\*\\/", "")
                         .replaceAll("\\*", "")

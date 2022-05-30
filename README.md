@@ -3,6 +3,10 @@
 easy-doc的maven插件，用于存储过滤后的源文件，文件会在resouce中生成
 
 # 版本说明
+## 1.0.1
+- 正则匹配和easy-doc-core统一
+- jackson替换fastjson
+
 ## 1.0.0
 - 第一个线上可用版本
 - 可以选择解析指定文件以及跳过指定文件
@@ -15,7 +19,7 @@ easy-doc的maven插件，用于存储过滤后的源文件，文件会在resouce
             <plugin>
                 <groupId>com.stalary</groupId>
                 <artifactId>easydoc-maven-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.1</version>
                 <!-- -Dpath可以替代 -->
                 <!--<configuration>
                     <path>com.stalary.easydoc</path>
